@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tonnages', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->id()->autoIncrement()->primary();
+            $table->tinyInteger('value')->unique();
+            $table->timestamps();
         });
     }
 
