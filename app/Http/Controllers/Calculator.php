@@ -9,7 +9,6 @@ class Calculator extends Controller
 {
     public function index()
     {
-        $test = Months::find(1);
-        dd($test->name);
+        return view('calculator');
     }
 }
