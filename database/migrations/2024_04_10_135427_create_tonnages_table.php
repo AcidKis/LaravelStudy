@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tonnages', function (Blueprint $table) {
-            $table->id()->autoIncrement()->primary();
-            $table->tinyInteger('value')->unique();
+            $table->id();
+            $table->tinyInteger('value')->unique()->unsigned();
             $table->timestamps();
         });
     }

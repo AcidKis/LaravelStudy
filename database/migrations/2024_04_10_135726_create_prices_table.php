@@ -13,8 +13,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('prices', function (Blueprint $table) {
-            $table->id()->autoIncrement()->primary();
-            $table->foreignIdFor(Type::class);
+            $table->id();
+            $table->foreignId('month_id')->constrained('months', indexName: 'price_month_id')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->foreignId('type_id')->constrained('types', indexName: 'price_type_id')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->foreignId('tonnage_id')->constrained('tonnages', indexName: 'price_tonnage_id')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->smallInteger('price')->unsigned();
         });
     }
 
@@ -23,6 +32,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('prices', function (Blueprint $table){
+            $table->dropForeign('price_month_id');
+            $table->dropForeign('price_type_id');
+            $table->dropForeign('price_tonnage_id');
+        });
         Schema::dropIfExists('prices');
     }
 };
