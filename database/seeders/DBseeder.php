@@ -48,5 +48,28 @@ class DBseeder extends Seeder
         foreach ($types as $type) {
             DB::table('types')->insert(['name' => $type, 'created_at' => Date::now(), 'updated_at' => Date::now()]);
         }
+
+        $cross = DB::table('months')
+            ->select([
+                'months.id',
+                't1.id as tonnage_id',
+                't2.id as type_id'
+            ])
+            ->crossJoin('tonnages as t1')
+            ->crossJoin('types as t2')
+            ->get();
+
+        foreach ($cross as $value) {
+            DB::table('prices')
+                ->insert([
+                    'month_id' => $value->id,
+                    'tonnage_id' => $value->tonnage_id,
+                    'type_id' => $value->type_id,
+                    'price' => rand(100, 200),
+                    'updated_at' => Date::now(),
+                    'created_at' => Date::now(),
+                ]);
+        }
+
     }
 }

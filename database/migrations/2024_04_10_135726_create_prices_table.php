@@ -24,6 +24,7 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->smallInteger('price')->unsigned();
+            $table->timestamps();
         });
     }
 
