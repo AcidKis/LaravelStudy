@@ -13,7 +13,7 @@
                     <form>
                         <select class="form-select">
                             @foreach($monthsList as $value)
-                                <option>{{$value}}</option>
+                                <option value="{{$value}}">{{$value}}</option>
                             @endforeach
                         </select>
                     </form>
