@@ -1,35 +1,42 @@
 @extends('layout/header')
 @section('content')
-    <h1>Калькулятор стоимости доставки сырья</h1>
-    <div class="container text-center">
-        <div class="row g-2 py-5">
-            <div class="col">
-                <div class="form-floating">
-
+    <form action="{{ route('calculator.store') }}" method="post">
+        @csrf
+        <div class="container" >
+            <div class="row mt-5">
+                <h1>Калькулятор расчета стоимости доставки</h1>
+            </div>
+            <div class="row mt-5">
+                <div class="col">
+                    <select class="form-select" name="month">
+                        @foreach($monthsList as $value)
+                            <option value="{{$value}}">{{$value}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-select" name="type">
+                        @foreach($typesList as $value)
+                            <option value="{{$value}}">{{$value}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-select" name="tonnage">
+                        @foreach($tonnagesList as $value)
+                            <option value="{{$value}}">{{$value}}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
-            <div class="col">
-                <div class="form-floating">
-                    <form>
-                        <select class="form-select">
-                            @foreach($monthsList as $value)
-                                <option value="{{$value}}">{{$value}}</option>
-                            @endforeach
-                        </select>
-                    </form>
-                </div>
+            <div class="mt-5 d-flex justify-content-center">
+                <button type="submit" class="btn btn-success">Расчитать</button>
             </div>
-            <div class="col">
-                <div class="form-floating">
-
-                </div>
+            @if(isset($result))
+            <div class="mt-5 d-flex justify-content-center">
+                <h2>Результат: {{"$result->price"}}</h2>
             </div>
+            @endif
         </div>
-        <div class="row justify-content-md-center py-5">
-            <div class="col">
-
-            </div>
-        </div>
-        <div class="row justify-content-md-center py-5" id="result-container"></div>
-    </div>
+    </form>
 @endsection

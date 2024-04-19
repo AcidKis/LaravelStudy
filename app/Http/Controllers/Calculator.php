@@ -12,6 +12,28 @@ class Calculator extends Controller
 {
     public function index()
     {
-        return view('calculator', ['monthsList' => Months::getMonthList()]);
+        return view('calculator', [
+            'monthsList' => Months::getMonthList(),
+            'typesList' => Type::getTypeList(),
+            'tonnagesList' => Tonnages::getTonnageList(),
+        ]);
+    }
+    public function store(Request $request)
+    {
+        $result = DB::table('prices')
+            ->join('months', 'prices.month_id', '=', 'months.id')
+            ->join('types', 'prices.type_id', '=', 'types.id',)
+            ->join('tonnages', 'prices.tonnage_id', '=', 'tonnages.id')
+            ->where('months.name', '=', "$request->month")
+            ->where('types.name', '=', "$request->type")
+            ->where('tonnages.value', '=', "$request->tonnage")
+            ->first('price');
+
+        return view('calculator', [
+            'monthsList' => Months::getMonthList(),
+            'typesList' => Type::getTypeList(),
+            'tonnagesList' => Tonnages::getTonnageList(),
+            'result' => $result
+        ]);
     }
 }
