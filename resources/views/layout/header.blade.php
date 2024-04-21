@@ -14,11 +14,26 @@
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="{{ route('calculator') }}" class="nav-link px-2 text-white">Калькулятор</a></li>
-                    <li><a href="" class="nav-link px-2 text-white">О проекте</a></li>
+                    <li><a href="{{ route('calculator.about') }}" class="nav-link px-2 text-white">О проекте</a></li>
                 </ul>
                 <ul class="nav col-12 col-lg-auto ms-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="" class="nav-link px-2 text-white">Войти</a></li>
-                    <li><a href="" class="nav-link px-2 text-white">Регистрация</a></li>
+                    @guest
+                    <li><a href="calculator.login" class="nav-link px-2 text-white">Войти</a></li>
+                    <li><a href="calculator.register" class="nav-link px-2 text-white">Регистрация</a></li>
+                    @else
+                        <li><a href="" class="nav-link px-2 text-white">Профиль: {{ Auth::user()->name }}</a></li>
+                        <li>
+                            <a class="nav-link px-2 text-white" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Выйти') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    @endguest
                 </ul>
             </div>
         </div>

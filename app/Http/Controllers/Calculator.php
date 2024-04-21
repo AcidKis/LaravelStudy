@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 class Calculator extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         return view('calculator', [
@@ -35,5 +39,10 @@ class Calculator extends Controller
             'tonnagesList' => Tonnages::getTonnageList(),
             'result' => $result
         ]);
+    }
+
+    public function about()
+    {
+        return view('about');
     }
 }
